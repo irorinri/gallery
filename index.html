@@ -109,7 +109,7 @@
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
       // キャプションを有効化
       captionContent: (slide) => {
-        return slide.original.dataset.caption || '';
+        return slide.caption || '';
       },
     });
     lightbox.init();
