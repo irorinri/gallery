@@ -29,12 +29,12 @@
     <!-- ギャラリーの画像がここに挿入されます -->
   </div>
 
-  <!-- PhotoSwipeのルート要素 -->
-  <div class="pswp" id="pswp"></div>
+  <!-- PhotoSwipeのルート要素（自動的に生成されるため不要になりました） -->
+  <!-- <div class="pswp" id="pswp"></div> -->
 
   <!-- PhotoSwipeのJavaScriptを読み込み -->
-  <script src="https://unpkg.com/photoswipe@5/dist/photoswipe.umd.min.js"></script>
-  <script>
+  <script src="https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js" type="module"></script>
+  <script type="module">
     // 画像ファイル名のリストを自動生成
     const startDate = new Date('2023-10-01');
     const endDate = new Date('2023-10-31');
@@ -57,37 +57,40 @@
     const galleryElement = document.querySelector('.gallery');
 
     // ギャラリーに画像を追加
-    images.forEach((image, index) => {
+    images.forEach((image) => {
+      const link = document.createElement('a');
+      link.href = image.src;
+      link.dataset.pswpWidth = image.width;
+      link.dataset.pswpHeight = image.height;
+      link.dataset.caption = image.date; // 日付をキャプションとして保存
+
       const img = document.createElement('img');
       img.src = image.src;
       img.alt = 'イラスト';
-      img.dataset.index = index; // 画像のインデックスを保存
 
-      // 画像クリック時のイベントリスナー
-      img.addEventListener('click', () => {
-        openPhotoSwipe(index);
-      });
-
-      galleryElement.appendChild(img);
+      link.appendChild(img);
+      galleryElement.appendChild(link);
     });
 
-    // PhotoSwipeを初期化する関数
-    function openPhotoSwipe(index) {
-      const pswpElement = document.getElementById('pswp');
+    // PhotoSwipeLightboxを初期化
+    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
 
-      const options = {
-        index: index,
-        bgOpacity: 0.8,
-        showHideAnimationType: 'fade',
-        dataSource: images,
-      };
-
-      const gallery = new PhotoSwipe(pswpElement, options);
-      gallery.init();
-    }
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '.gallery',
+      children: 'a',
+      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
+      // キャプションを表示するための設定
+      captionSelector: 'self',
+      addCaptionHTMLFn: (item, captionEl) => {
+        if (!item.originalImage.dataset.caption) {
+          captionEl.children[0].innerText = '';
+          return false;
+        }
+        captionEl.children[0].innerText = item.originalImage.dataset.caption;
+        return true;
+      },
+    });
+    lightbox.init();
   </script>
-</body>
-</html>
-  
 </body>
 </html>
