@@ -2,7 +2,6 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>イラストギャラリー</title>
   <!-- PhotoSwipeのCSSを読み込み -->
   <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
@@ -17,10 +16,14 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-    .gallery img {
+    .gallery a {
       width: 5%;
       margin: 0.5%;
-      cursor: pointer;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
@@ -29,15 +32,55 @@
     <!-- ギャラリーの画像がここに挿入されます -->
   </div>
 
+  <!-- PhotoSwipeのHTMLテンプレート -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+      <!-- Container that holds slides. 
+          PhotoSwipe keeps only 3 of them in the DOM to save memory.
+          Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+        <div class="pswp__top-bar">
+          <!-- Controls are self-explanatory. Order can be changed. -->
+          <div class="pswp__counter"></div>
+          <button class="pswp__button pswp__button--close" title="閉じる (Esc)"></button>
+          <button class="pswp__button pswp__button--zoom" title="ズームイン/アウト"></button>
+          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- PhotoSwipeのJavaScriptを読み込み -->
-  <script src="https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js" type="module"></script>
   <script type="module">
+    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
+
     // 画像ファイル名と日付のリストを手動で管理
     const images = [
       { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
       { src: 'images/2023-10-11.png', width: 1000, height: 1000, date: '2023-10-11' },
       // 新しい画像を追加する場合は、ここにオブジェクトを追加します
-      // 例: { src: 'images/illustration3.png', width: 1000, height: 1000, date: '2023-10-12' },
+      // 例: { src: 'images/2023-10-12.png', width: 1000, height: 1000, date: '2023-10-12' },
     ];
 
     // ギャラリー要素を取得
@@ -49,7 +92,7 @@
       link.href = image.src;
       link.dataset.pswpWidth = image.width;
       link.dataset.pswpHeight = image.height;
-      link.dataset.pswpCaption = image.date; // 日付をキャプションとして保存
+      link.dataset.caption = image.date; // 日付をキャプションとして保存
 
       const img = document.createElement('img');
       img.src = image.src;
@@ -60,15 +103,13 @@
     });
 
     // PhotoSwipeLightboxを初期化
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
-
     const lightbox = new PhotoSwipeLightbox({
       gallery: '.gallery',
       children: 'a',
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
       // キャプションを有効化
       captionContent: (slide) => {
-        return slide.data.pswpCaption || '';
+        return slide.data.caption || '';
       },
     });
     lightbox.init();
