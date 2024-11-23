@@ -1,7 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <!-- （ヘッダー部分はそのまま） -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イラストギャラリー</title>
+  <!-- PhotoSwipeのCSSを読み込み -->
+  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 5%;
+      margin: 0.5%;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div class="gallery">
@@ -15,7 +36,8 @@
     const images = [
       { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
       { src: 'images/2023-10-11.png', width: 1000, height: 1000, date: '2023-10-11' },
-      // 他の画像を追加
+      // 新しい画像を追加する場合は、ここにオブジェクトを追加します
+      // 例: { src: 'images/illustration3.png', width: 1000, height: 1000, date: '2023-10-12' },
     ];
 
     // ギャラリー要素を取得
@@ -27,7 +49,7 @@
       link.href = image.src;
       link.dataset.pswpWidth = image.width;
       link.dataset.pswpHeight = image.height;
-      link.dataset.caption = image.date; // 日付をキャプションとして保存
+      link.dataset.pswpCaption = image.date; // 日付をキャプションとして保存
 
       const img = document.createElement('img');
       img.src = image.src;
@@ -46,7 +68,7 @@
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
       // キャプションを有効化
       captionContent: (slide) => {
-        return slide.data.caption || '';
+        return slide.data.pswpCaption || '';
       },
     });
     lightbox.init();
