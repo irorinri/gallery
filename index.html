@@ -1,4 +1,12 @@
-<style>
+下のコードを変えてくれる？ズームボタンはもうできてるから、クローズボタンの修正お願い。余計なとこいじらないでね。
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イラストギャラリー</title>
+  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
+  <style>
     body {
       margin: 0;
       padding: 0;
@@ -89,3 +97,62 @@
       }
     }
 </style>
+</head>
+<body>
+  <div class="gallery"></div>
+
+  <script type="module">
+    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
+
+    const images = [
+      { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
+      { src: 'images/2023-10-11.png', width: 1000, height: 1000, date: '2023-10-11' },
+    ];
+
+    const galleryElement = document.querySelector('.gallery');
+
+    images.forEach(({ src, width, height, date }) => {
+      const link = document.createElement('a');
+      link.href = src;
+      link.dataset.pswpWidth = width;
+      link.dataset.pswpHeight = height;
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'イラスト';
+
+      const captionSpan = document.createElement('span');
+      captionSpan.className = 'hidden-caption-content';
+      captionSpan.textContent = date;
+      captionSpan.style.display = 'none';
+
+      link.append(img, captionSpan);
+      galleryElement.append(link);
+    });
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '.gallery',
+      children: 'a',
+      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
+    });
+
+    lightbox.on('uiRegister', () => {
+      lightbox.pswp.ui.registerElement({
+        name: 'custom-caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'wrapper',
+        html: '',
+        onInit: (el, pswp) => {
+          pswp.on('change', () => {
+            const captionSpan = pswp.currSlide?.data.element.querySelector('.hidden-caption-content');
+            el.innerHTML = captionSpan ? captionSpan.textContent : 'キャプションなし';
+          });
+        }
+      });
+    });
+
+    lightbox.init();
+  </script>
+</body>
+</html>
