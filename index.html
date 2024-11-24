@@ -63,7 +63,9 @@
       const captionSpan = document.createElement('span');
       captionSpan.className = 'hidden-caption-content';
       captionSpan.textContent = image.date;
+      captionSpan.style.display = 'none'; // 初期状態で非表示に設定
 
+      
       link.appendChild(img);
       link.appendChild(captionSpan);
       galleryElement.appendChild(link);
