@@ -90,6 +90,8 @@
             const captionSpan = currSlide.data.element.querySelector('.hidden-caption-content');
             const caption = captionSpan ? captionSpan.textContent : 'キャプションなし';
             el.innerHTML = caption;
+            el.style.fontSize = '18px'; // フォントサイズをやや大きく
+            el.style.padding = '12px 15px'; // パディングを増やす
           });
         }
       });
