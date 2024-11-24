@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>イラストギャラリー</title>
-  <!-- PhotoSwipeのCSSを読み込み -->
   <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
   <style>
     body {
@@ -25,74 +24,69 @@
       height: auto;
       display: block;
     }
-    /* キャプションのスタイルを追加 */
     .pswp__custom-caption {
-      color: blue;
-      font-size: 16px;
+      color: white;
+      font-size: 14px;
       text-align: center;
-      padding: 10px;
+      padding: 8px 10px;
       position: absolute;
       bottom: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
-  <div class="gallery">
-    <!-- ギャラリーの画像がここに挿入されます -->
-  </div>
+  <div class="gallery"></div>
 
-  <!-- PhotoSwipeのJavaScriptを読み込み -->
   <script type="module">
     import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
 
-    // 画像ファイル名と日付のリストを手動で管理
     const images = [
       { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
       { src: 'images/2023-10-11.png', width: 1000, height: 1000, date: '2023-10-11' },
-      // 新しい画像を追加する場合は、ここにオブジェクトを追加します
     ];
 
-    // ギャラリー要素を取得
     const galleryElement = document.querySelector('.gallery');
 
-    // ギャラリーに画像を追加
     images.forEach((image) => {
       const link = document.createElement('a');
       link.href = image.src;
       link.dataset.pswpWidth = image.width;
       link.dataset.pswpHeight = image.height;
-      link.dataset.caption = image.date; // 日付をキャプションとして保存
-　　　　link.classList.add('hidden-caption-content'); 
-      
+
       const img = document.createElement('img');
       img.src = image.src;
       img.alt = 'イラスト';
 
+      const captionSpan = document.createElement('span');
+      captionSpan.className = 'hidden-caption-content';
+      captionSpan.textContent = image.date;
+
       link.appendChild(img);
+      link.appendChild(captionSpan);
       galleryElement.appendChild(link);
     });
 
-    // PhotoSwipeLightboxを初期化
     const lightbox = new PhotoSwipeLightbox({
       gallery: '.gallery',
       children: 'a',
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
     });
 
-    // カスタムキャプションUIを登録
     lightbox.on('uiRegister', function() {
       lightbox.pswp.ui.registerElement({
         name: 'custom-caption',
         order: 9,
         isButton: false,
-        appendTo: 'wrapper', // 'wrapper' または 'root' に追加
+        appendTo: 'wrapper',
         html: '',
         onInit: (el, pswp) => {
           pswp.on('change', () => {
             const currSlide = pswp.currSlide;
-            const caption = currSlide.data.caption || '';
+            const captionSpan = currSlide.data.element.querySelector('.hidden-caption-content');
+            const caption = captionSpan ? captionSpan.textContent : 'キャプションなし';
             el.innerHTML = caption;
           });
         }
