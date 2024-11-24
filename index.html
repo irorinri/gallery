@@ -6,6 +6,7 @@
   <!-- PhotoSwipeのCSSを読み込み -->
   <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
   <style>
+    /* 既存のCSSはそのまま使用 */
     body {
       margin: 0;
       padding: 0;
@@ -41,6 +42,7 @@
 
   <!-- PhotoSwipeのHTMLテンプレート -->
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- テンプレートの内容はそのまま -->
     <div class="pswp__bg"></div>
     <div class="pswp__scroll-wrap">
       <div class="pswp__container">
@@ -70,9 +72,9 @@
   </div>
 
   <!-- PhotoSwipeのJavaScriptを読み込み -->
-  <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
-
+  <script src="https://unpkg.com/photoswipe@5/dist/photoswipe.umd.min.js"></script>
+  <script src="https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.umd.min.js"></script>
+  <script>
     // 画像ファイル名と日付のリストを手動で管理
     const images = [
       { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
@@ -87,9 +89,9 @@
     images.forEach((image) => {
       const link = document.createElement('a');
       link.href = image.src;
-      link.dataset.pswpWidth = image.width;
-      link.dataset.pswpHeight = image.height;
-      link.dataset.caption = image.date; // 日付をキャプションとして保存
+      link.setAttribute('data-pswp-width', image.width);
+      link.setAttribute('data-pswp-height', image.height);
+      link.setAttribute('data-caption', image.date); // 日付をキャプションとして保存
 
       const img = document.createElement('img');
       img.src = image.src;
@@ -103,10 +105,10 @@
     const lightbox = new PhotoSwipeLightbox({
       gallery: '.gallery',
       children: 'a',
-      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
+      pswpModule: PhotoSwipe,
       // キャプションを有効化
       captionContent: (slide) => {
-        return slide.data.element.dataset.caption || '';
+        return slide.data.element.getAttribute('data-caption') || '';
       },
     });
     lightbox.init();
