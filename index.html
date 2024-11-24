@@ -26,47 +26,21 @@
       display: block;
     }
     /* キャプションのスタイルを追加 */
-    .pswp__caption__text {
+    .pswp__custom-caption {
       color: white;
       font-size: 16px;
       text-align: center;
       padding: 10px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
     }
   </style>
 </head>
 <body>
   <div class="gallery">
     <!-- ギャラリーの画像がここに挿入されます -->
-  </div>
-
-  <!-- PhotoSwipeのHTMLテンプレート -->
-  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="pswp__bg"></div>
-    <div class="pswp__scroll-wrap">
-      <div class="pswp__container">
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-      </div>
-      <div class="pswp__ui pswp__ui--hidden">
-        <div class="pswp__top-bar">
-          <div class="pswp__counter"></div>
-          <button class="pswp__button pswp__button--close" title="閉じる (Esc)"></button>
-          <button class="pswp__button pswp__button--zoom" title="ズームイン/アウト"></button>
-          <div class="pswp__preloader">
-            <div class="pswp__preloader__icn">
-              <div class="pswp__preloader__cut">
-                <div class="pswp__preloader__donut"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- キャプションを表示する要素 -->
-        <div class="pswp__caption">
-          <div class="pswp__caption__text"></div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- PhotoSwipeのJavaScriptを読み込み -->
@@ -89,7 +63,7 @@
       link.href = image.src;
       link.dataset.pswpWidth = image.width;
       link.dataset.pswpHeight = image.height;
-      link.dataset.pswpCaption = image.date; // 日付をキャプションとして保存
+      link.dataset.caption = image.date; // 日付をキャプションとして保存
 
       const img = document.createElement('img');
       img.src = image.src;
@@ -104,11 +78,26 @@
       gallery: '.gallery',
       children: 'a',
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
-      // キャプションを有効化
-      captionContent: (slide) => {
-        return slide.data.pswpCaption || '';
-      },
     });
+
+    // カスタムキャプションUIを登録
+    lightbox.on('uiRegister', function() {
+      lightbox.pswp.ui.registerElement({
+        name: 'custom-caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'wrapper', // 'wrapper' または 'root' に追加
+        html: '',
+        onInit: (el, pswp) => {
+          pswp.on('change', () => {
+            const currSlide = pswp.currSlide;
+            const caption = currSlide.data.caption || '';
+            el.innerHTML = caption;
+          });
+        }
+      });
+    });
+
     lightbox.init();
   </script>
 </body>
