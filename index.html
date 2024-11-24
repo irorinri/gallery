@@ -90,10 +90,31 @@
             const captionSpan = currSlide.data.element.querySelector('.hidden-caption-content');
             const caption = captionSpan ? captionSpan.textContent : 'キャプションなし';
             el.innerHTML = caption;
-            el.style.fontSize = '18px'; // フォントサイズをやや大きく
-            el.style.padding = '12px 15px'; // パディングを増やす
+
+            el.style.fontSize = '20px';
+            el.style.padding = '15px';
           });
         }
+      });
+
+      // 番号や×ボタンのスタイル変更
+      lightbox.pswp.on('uiRegister', () => {
+        setTimeout(() => {
+          const counter = document.querySelector('.pswp__counter');
+          if (counter) {
+            counter.style.fontSize = '18px';
+          }
+
+          const closeButton = document.querySelector('.pswp__button--close');
+          if (closeButton) {
+            closeButton.style.fontSize = '24px';
+          }
+
+          const navButtons = document.querySelectorAll('.pswp__button');
+          navButtons.forEach((button) => {
+            button.style.fontSize = '20px';
+          });
+        }, 100);
       });
     });
 
