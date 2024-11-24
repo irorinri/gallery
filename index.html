@@ -25,23 +25,30 @@
       display: block;
     }
     .pswp__custom-caption {
-  font-size: 20px !important;
-  padding: 15px !important;
-}
-.pswp__counter {
-  font-size: 18px !important;
-}
-.pswp__button--close {
-  font-size: 24px !important;
-  width: 50px !important;
-  height: 50px !important;
-}
-.pswp__button--arrow--left,
-.pswp__button--arrow--right {
-  font-size: 20px !important;
-  width: 50px !important;
-  height: 50px !important;
-}
+      color: white;
+      font-size: 20px; /* キャプションを大きく */
+      text-align: center;
+      padding: 15px;   /* キャプションの余白を増やす */
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      box-sizing: border-box;
+    }
+    .pswp__counter {
+      font-size: 18px; /* 番号を大きく */
+    }
+    .pswp__button--close {
+      font-size: 24px; /* ×ボタンを大きく */
+      width: 50px;
+      height: 50px;
+    }
+    .pswp__button--arrow--left,
+    .pswp__button--arrow--right {
+      font-size: 20px; /* ナビゲーションボタンを大きく */
+      width: 50px;
+      height: 50px;
+    }
 
     @media (max-width: 768px) {
       .pswp__custom-caption {
