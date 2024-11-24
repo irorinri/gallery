@@ -89,7 +89,7 @@
       link.href = image.src;
       link.dataset.pswpWidth = image.width;
       link.dataset.pswpHeight = image.height;
-      link.dataset.caption = image.date; // 日付をキャプションとして保存
+      link.dataset.pswpCaption = image.date; // 日付をキャプションとして保存
 
       const img = document.createElement('img');
       img.src = image.src;
@@ -106,7 +106,7 @@
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
       // キャプションを有効化
       captionContent: (slide) => {
-        return slide.data.caption || '';
+        return slide.data.pswpCaption || '';
       },
     });
     lightbox.init();
