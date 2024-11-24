@@ -53,13 +53,14 @@
       position: absolute !important; /* 位置を固定 */
       top: 4px !important; /* 上からの位置調整 */
       right: 20px !important; /* 右からの位置調整 */
-      width: 30px !important; /* ボタンの幅 */
-      height: 30px !important; /* ボタンの高さ */
+      width: 50px !important; /* ボタンの幅 */
+      height: 50px !important; /* ボタンの高さ */
     }
     .pswp__button--zoom svg {
     width: 100% !important;
     height: 100% !important;
     display: block !important;
+    transform: translateY(-5%) !important;
   }
     @media (max-width: 768px) {
       .pswp__custom-caption {
@@ -79,12 +80,13 @@
       .pswp__button--zoom {
         top: 0px !important; /* スマホ用に位置を調整 */
         right: 100px !important; /* スマホ用に位置を調整 */
-        width: 30px !important; /* スマホ用にサイズを小さく */
-        height: 30px !important;
+        width: 50px !important; /* スマホ用にサイズを小さく */
+        height: 50px !important;
       }
       .pswp__button--zoom svg {
       width: 100% !important;
       height: 100% !important;
+      transform: translateY(-5%) !important;
     }
     }
   </style>
