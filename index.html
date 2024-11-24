@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>イラストギャラリー</title>
   <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
   <style>
@@ -45,20 +46,20 @@
       width: 80px !important;
       height: 80px !important;
     }
-　　　.pswp__button--zoom {
-    position: absolute !important; /* 位置を固定 */
-    top: 4px !important; /* 上からの位置調整 */
-    right: 20px !important; /* 右からの位置調整 */
-    width: 50px !important; /* ボタンの幅 */
-　　  height: 50px !important; /* ボタンの高さ */
-　　}
+    .pswp__button--zoom {
+      position: absolute !important; /* 位置を固定 */
+      top: 4px !important; /* 上からの位置調整 */
+      right: 20px !important; /* 右からの位置調整 */
+      width: 50px !important; /* ボタンの幅 */
+      height: 50px !important; /* ボタンの高さ */
+    }
     @media (max-width: 768px) {
       .pswp__custom-caption {
-        font-size: 50px !important;
+        font-size: 30px !important;
         padding: 10px !important;
       }
       .pswp__counter {
-        font-size: 50px !important;
+        font-size: 20px !important;
       }
       .pswp__button--close,
       .pswp__button--arrow--left,
@@ -70,11 +71,9 @@
       .pswp__button--zoom {
         top: 15px !important; /* スマホ用に位置を調整 */
         right: 25px !important; /* スマホ用に位置を調整 */
-        width: 50px !important; /* スマホ用にサイズを小さく */
-        height: 50px !important;
+        width: 40px !important; /* スマホ用にサイズを小さく */
+        height: 40px !important;
       }
-
-      
     }
   </style>
 </head>
