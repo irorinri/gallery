@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>イラストギャラリー</title>
-  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
-  <style>
+<style>
     body {
       margin: 0;
       padding: 0;
@@ -39,17 +32,23 @@
     .pswp__counter {
       font-size: 45px !important;
     }
-    .pswp__button--close,
-    .pswp__button--arrow--left,
-    .pswp__button--arrow--right,
-    .pswp__button svg {
+    .pswp__button--close {
+      display: flex !important; /* アイコンを中央に配置 */
+      align-items: center !important; /* 垂直方向に中央寄せ */
+      justify-content: center !important; /* 水平方向に中央寄せ */
       width: 80px !important;
       height: 80px !important;
+    }
+    .pswp__button--close svg {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      transform: translateY(-5%) !important; /* アイコンを少し上に移動 */
     }
     .pswp__button--zoom {
       display: flex !important; /* アイコンを中央に配置 */
       align-items: center !important; /* 垂直方向に中央寄せ */
-      justify-content: center !important; /* 
+      justify-content: center !important;
       position: absolute !important; /* 位置を固定 */
       top: 4px !important; /* 上からの位置調整 */
       right: 20px !important; /* 右からの位置調整 */
@@ -57,11 +56,11 @@
       height: 50px !important; /* ボタンの高さ */
     }
     .pswp__button--zoom svg {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-    transform: translateY(-5%) !important;
-  }
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      transform: translateY(-5%) !important;
+    }
     @media (max-width: 768px) {
       .pswp__custom-caption {
         font-size: 17px !important;
@@ -70,12 +69,12 @@
       .pswp__counter {
         font-size: 17px !important;
       }
-      .pswp__button--close,
-      .pswp__button--arrow--left,
-      .pswp__button--arrow--right,
-      .pswp__button svg {
+      .pswp__button--close {
         width: 50px !important;
         height: 50px !important;
+      }
+      .pswp__button--close svg {
+        transform: translateY(-3%) !important; /* スマホ用に微調整 */
       }
       .pswp__button--zoom {
         top: 0px !important; /* スマホ用に位置を調整 */
@@ -84,68 +83,9 @@
         height: 50px !important;
       }
       .pswp__button--zoom svg {
-      width: 100% !important;
-      height: 100% !important;
-      transform: translateY(-5%) !important;
+        width: 100% !important;
+        height: 100% !important;
+        transform: translateY(-5%) !important;
+      }
     }
-    }
-  </style>
-</head>
-<body>
-  <div class="gallery"></div>
-
-  <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
-
-    const images = [
-      { src: 'images/2023-10-10.png', width: 1000, height: 1000, date: '2023-10-10' },
-      { src: 'images/2023-10-11.png', width: 1000, height: 1000, date: '2023-10-11' },
-    ];
-
-    const galleryElement = document.querySelector('.gallery');
-
-    images.forEach(({ src, width, height, date }) => {
-      const link = document.createElement('a');
-      link.href = src;
-      link.dataset.pswpWidth = width;
-      link.dataset.pswpHeight = height;
-
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'イラスト';
-
-      const captionSpan = document.createElement('span');
-      captionSpan.className = 'hidden-caption-content';
-      captionSpan.textContent = date;
-      captionSpan.style.display = 'none';
-
-      link.append(img, captionSpan);
-      galleryElement.append(link);
-    });
-
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '.gallery',
-      children: 'a',
-      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
-    });
-
-    lightbox.on('uiRegister', () => {
-      lightbox.pswp.ui.registerElement({
-        name: 'custom-caption',
-        order: 9,
-        isButton: false,
-        appendTo: 'wrapper',
-        html: '',
-        onInit: (el, pswp) => {
-          pswp.on('change', () => {
-            const captionSpan = pswp.currSlide?.data.element.querySelector('.hidden-caption-content');
-            el.innerHTML = captionSpan ? captionSpan.textContent : 'キャプションなし';
-          });
-        }
-      });
-    });
-
-    lightbox.init();
-  </script>
-</body>
-</html>
+</style>
