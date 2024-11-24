@@ -26,9 +26,9 @@
     }
     .pswp__custom-caption {
       color: white !important;
-      font-size: 45px !important; /* キャプションを大きく */
+      font-size: 45px !important;
       text-align: center !important;
-      padding: 15px !important;   /* キャプションの余白を増やす */
+      padding: 15px !important;
       position: absolute !important;
       bottom: 0 !important;
       width: 100% !important;
@@ -36,43 +36,43 @@
       box-sizing: border-box !important;
     }
     .pswp__counter {
-      font-size: 45px !important; /* 番号を大きく */
+      font-size: 45px !important;
     }
     .pswp__button--close,
     .pswp__button--arrow--left,
     .pswp__button--arrow--right {
-      width: 80px !important; /* ボタン自体の大きさを大きく */
+      width: 80px !important;
       height: 80px !important;
     }
     .pswp__button svg {
-      width: 100% !important; /* SVGアイコンの幅をボタンに合わせる */
-      height: 100% !important; /* SVGアイコンの高さをボタンに合わせる */
+      width: 100% !important;
+      height: 100% !important;
     }
-
+    .pswp__button--zoom {
+      width: 80px !important;
+      height: 80px !important;
+    }
     @media (max-width: 768px) {
       .pswp__custom-caption {
-        font-size: 50px !important; /* スマホ用にキャプション調整 */
+        font-size: 50px !important;
         padding: 10px !important;
       }
       .pswp__counter {
-        font-size: 50px !important; /* スマホ用に番号調整 */
+        font-size: 50px !important;
       }
       .pswp__button--close,
       .pswp__button--arrow--left,
-      .pswp__button--arrow--right {
-        width: 60px !important; /* スマホ用にボタンサイズ調整 */
+      .pswp__button--arrow--right,
+      .pswp__button--zoom {
+        width: 60px !important;
         height: 60px !important;
       }
       .pswp__button svg {
         width: 100% !important;
         height: 100% !important;
       }
-      .pswp__button--zoom {
-    width: 100px !important; /* スマホ用にボタンサイズを小さく調整 */
-    height: 100px !important;
-  }
     }
-</style>
+  </style>
 </head>
 <body>
   <div class="gallery"></div>
@@ -113,25 +113,19 @@
       pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js'),
     });
 
-    lightbox.on('uiRegister', function() {
+    // 拡大ボタンの登録
+    lightbox.on('uiRegister', () => {
       lightbox.pswp.ui.registerElement({
-        name: 'custom-caption',
-        order: 9,
-        isButton: false,
-        appendTo: 'wrapper',
-        html: '',
-        onInit: (el, pswp) => {
-          pswp.on('change', () => {
-            const currSlide = pswp.currSlide;
-            const captionSpan = currSlide.data.element.querySelector('.hidden-caption-content');
-            const caption = captionSpan ? captionSpan.textContent : 'キャプションなし';
-            el.innerHTML = caption;
-          });
-        }
-      });
-    });
+        name: 'zoom',
+        order: 10, // ボタンの順序
+        isButton: true,
+        html: '🔍', // 拡大ボタンのアイコン（自由に変更可）
+        onClick: (pswp) => {
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
 
-    lightbox.init();
-  </script>
-</body>
-</html>
+          const slide = pswp.currSlide;
+          const imageWidth = slide.width;
+          const imageHeight = slide.height;
+
+          const viewportAspectRatio = viewportHeight / viewportWidth
