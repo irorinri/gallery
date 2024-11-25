@@ -25,80 +25,35 @@
       height: auto;
       display: block;
     }
-    .pswp__custom-caption {
-      color: white !important;
-      font-size: 45px !important;
-      text-align: center !important;
-      padding: 15px !important;
-      position: absolute !important;
-      bottom: 0 !important;
-      width: 100% !important;
-      background: rgba(0, 0, 0, 0.6) !important;
-      box-sizing: border-box !important;
-    }
-    .pswp__counter {
-      font-size: 45px !important;
-    }
-    .pswp__button--close {
-      display: flex !important; /* アイコンを中央に配置 */
-      align-items: center !important; /* 垂直方向に中央寄せ */
-      justify-content: center !important; /* 水平方向に中央寄せ */
-      width: 80px !important;
-      height: 80px !important;
-    }
-    .pswp__button--close svg {
-      width: 100% !important;
-      height: 100% !important;
-      display: block !important;
-      transform: translateY(-5%) !important; /* アイコンを少し上に移動 */
-    }
-    .pswp__button--zoom {
-      display: flex !important; /* アイコンを中央に配置 */
-      align-items: center !important; /* 垂直方向に中央寄せ */
-      justify-content: center !important;
-      position: absolute !important; /* 位置を固定 */
-      top: 4px !important; /* 上からの位置調整 */
-      right: 20px !important; /* 右からの位置調整 */
-      width: 50px !important; /* ボタンの幅 */
-      height: 50px !important; /* ボタンの高さ */
-    }
-    .pswp__button--zoom svg {
-      width: 100% !important;
-      height: 100% !important;
-      display: block !important;
-      transform: translateY(-5%) !important;
+    .copyright {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 14px;
+      padding: 5px 0;
+      z-index: 1000;
     }
     @media (max-width: 768px) {
-      .pswp__custom-caption {
-        font-size: 17px !important;
-        padding: 10px !important;
+      .gallery a {
+        width: 30%;
       }
-      .pswp__counter {
-        font-size: 17px !important;
-      }
-      .pswp__button--close {
-        width: 50px !important;
-        height: 50px !important;
-      }
-      .pswp__button--close svg {
-        transform: translateY(-3%) !important; /* スマホ用に微調整 */
-      }
-      .pswp__button--zoom {
-        top: 0px !important; /* スマホ用に位置を調整 */
-        right: 100px !important; /* スマホ用に位置を調整 */
-        width: 50px !important; /* スマホ用にサイズを小さく */
-        height: 50px !important;
-      }
-      .pswp__button--zoom svg {
-        width: 100% !important;
-        height: 100% !important;
-        transform: translateY(-5%) !important;
+      .copyright {
+        font-size: 12px;
+        padding: 4px 0;
       }
     }
-</style>
+  </style>
 </head>
 <body>
   <div class="gallery"></div>
+
+  <!-- 著作権表記 -->
+  <div class="copyright">
+    © irorinri. All Rights Reserved.
+  </div>
 
   <script type="module">
     import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
@@ -112,7 +67,6 @@
       { src: 'images/6.png', width: 1000, height: 1000, date: '2024-11-15' },
       { src: 'images/7.png', width: 1000, height: 1000, date: '2024-11-16' },
       { src: 'images/8.png', width: 1000, height: 1000, date: '2024-11-17' },
-      
     ];
 
     const galleryElement = document.querySelector('.gallery');
