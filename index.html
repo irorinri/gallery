@@ -83,7 +83,10 @@
 
     const galleryElement = document.querySelector('.gallery');
 
-    images.forEach(({ src, width, height, date }) => {
+    // 配列を逆順にする
+const reversedImages = [...images].reverse();
+
+reversedImages.forEach(({ src, width, height, date }) => {
   const link = document.createElement('a');
   link.href = src;
   link.dataset.pswpWidth = width;
@@ -99,7 +102,8 @@
   captionSpan.style.display = 'none';
 
   link.append(img, captionSpan);
-  galleryElement.prepend(link); // 追加する位置を "先頭" に変更
+  // 先頭に追加（新しい画像も先頭に追加されるように）
+  galleryElement.prepend(link);
 });
 
     const lightbox = new PhotoSwipeLightbox({
