@@ -84,23 +84,23 @@
     const galleryElement = document.querySelector('.gallery');
 
     images.forEach(({ src, width, height, date }) => {
-      const link = document.createElement('a');
-      link.href = src;
-      link.dataset.pswpWidth = width;
-      link.dataset.pswpHeight = height;
+  const link = document.createElement('a');
+  link.href = src;
+  link.dataset.pswpWidth = width;
+  link.dataset.pswpHeight = height;
 
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'イラスト';
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'イラスト';
 
-      const captionSpan = document.createElement('span');
-      captionSpan.className = 'hidden-caption-content';
-      captionSpan.textContent = date;
-      captionSpan.style.display = 'none';
+  const captionSpan = document.createElement('span');
+  captionSpan.className = 'hidden-caption-content';
+  captionSpan.textContent = date;
+  captionSpan.style.display = 'none';
 
-      link.append(img, captionSpan);
-      galleryElement.append(link);
-    });
+  link.append(img, captionSpan);
+  galleryElement.prepend(link); // 追加する位置を "先頭" に変更
+});
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: '.gallery',
