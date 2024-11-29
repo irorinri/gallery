@@ -83,9 +83,13 @@
 
     const galleryElement = document.querySelector('.gallery');
 
-    // 配列を逆順にする
+// ギャラリーを初期化
+galleryElement.innerHTML = '';
+
+// 配列を逆順にする
 const reversedImages = [...images].reverse();
 
+// ギャラリーに画像を逆順で追加
 reversedImages.forEach(({ src, width, height, date }) => {
   const link = document.createElement('a');
   link.href = src;
@@ -102,10 +106,8 @@ reversedImages.forEach(({ src, width, height, date }) => {
   captionSpan.style.display = 'none';
 
   link.append(img, captionSpan);
-  // 先頭に追加（新しい画像も先頭に追加されるように）
-  galleryElement.prepend(link);
+  galleryElement.appendChild(link);
 });
-
     const lightbox = new PhotoSwipeLightbox({
       gallery: '.gallery',
       children: 'a',
